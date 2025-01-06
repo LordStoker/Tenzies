@@ -18,11 +18,20 @@ export default function App() {
   }
 
   function hold(id){
-
-   setDices(prevDices => prevDices.map(dice => (
-    dice.id === id ?
-     {...dice, isHeld: !dice.isHeld} : dice)));
+    setDices(prevDices =>
+       prevDices.map(dice => 
+          dice.id === id ?
+          {...dice, isHeld: !dice.isHeld} : dice));
     }
+
+  function rollDice(){
+
+    setDices(prevDices => 
+      prevDices.map(dice => 
+        dice.isHeld ? dice : {...dice, value: Math.floor(Math.random() * 6) + 1})
+
+    );
+  }  
     // const newDice = dice.map(die => {
     //   if(die.id === id){
     //     return {...die, isHeld: !die.isHeld}
@@ -35,9 +44,15 @@ export default function App() {
   return(
     <main>
       <div className="dice-container">
-        {dices.map(die => <Die value={die.value} key={die.id} isHeld={die.isHeld} handleClick={ () => hold(die.id)} />)}
+        {dices.map(die => 
+            <Die 
+              value={die.value} 
+              key={die.id} 
+              isHeld={die.isHeld} 
+              handleClick={ () => hold(die.id)} />)
+        }
       </div>
-      <button className= "roll-dice" onClick={() => setDices(generateAllNewDice())}>Roll Dice</button>
+      <button className= "roll-dice" onClick={() => rollDice()}>Roll Dice</button>
     </main>
   )
 }
