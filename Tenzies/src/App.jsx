@@ -5,7 +5,7 @@ import {nanoid} from 'nanoid'
 
 export default function App() {
 
-  const [dice, setDice] = useState(generateAllNewDice());
+  const [dices, setDices] = useState(generateAllNewDice());
 
   function generateAllNewDice() {
     const newDice = []
@@ -18,17 +18,29 @@ export default function App() {
   }
 
   function hold(id){
-    console.log(id)
-  }
+
+   setDices(prevDices => prevDices.map(dice => (
+    dice.id === id ?
+     {...dice, isHeld: !dice.isHeld} : dice)));
+    }
+    // const newDice = dice.map(die => {
+    //   if(die.id === id){
+    //     return {...die, isHeld: !die.isHeld}
+    //   }
+    //   return die
+    // })
+    // setDice(newDice)
+  
 
   return(
     <main>
       <div className="dice-container">
-        {dice.map(die => <Die value={die.value} key={die.id} isHeld={die.isHeld} handleClick={ () => hold(die.id)} />)}
+        {dices.map(die => <Die value={die.value} key={die.id} isHeld={die.isHeld} handleClick={ () => hold(die.id)} />)}
       </div>
-      <button className= "roll-dice" onClick={() => setDice(generateAllNewDice())}>Roll Dice</button>
+      <button className= "roll-dice" onClick={() => setDices(generateAllNewDice())}>Roll Dice</button>
     </main>
   )
 }
+
 
 
