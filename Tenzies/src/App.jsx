@@ -17,10 +17,14 @@ export default function App() {
     return newDice
   }
 
+  function hold(id){
+    console.log(id)
+  }
+
   return(
     <main>
       <div className="dice-container">
-        {dice.map(die => <Die value={die.value} key={die.id} isHeld={die.isHeld} />)}
+        {dice.map(die => <Die value={die.value} key={die.id} isHeld={die.isHeld} handleClick={ () => hold(die.id)} />)}
       </div>
       <button className= "roll-dice" onClick={() => setDice(generateAllNewDice())}>Roll Dice</button>
     </main>
