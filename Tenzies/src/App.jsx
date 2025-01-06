@@ -7,7 +7,7 @@ export default function App() {
 
   const [dices, setDices] = useState(generateAllNewDice());
   const allHeld = dices.every(die => die.isHeld)
-  const allSame = dices.every((die, i, arr) => die.value === arr[0].value)
+  const allSame = dices.every((die, i, array) => die.value === array[0].value)
   
   if(allHeld && allSame){
     alert("You won!")
@@ -23,8 +23,6 @@ export default function App() {
     return newDice
   }
 
-
-
   function hold(id){
     setDices(prevDices =>
        prevDices.map(dice => 
@@ -35,7 +33,6 @@ export default function App() {
   function rollDice(){
     if(allHeld && allSame){
       setDices(generateAllNewDice())
-      
     }
     setDices(prevDices => 
       prevDices.map(dice => 
