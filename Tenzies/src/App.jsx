@@ -6,6 +6,12 @@ import {nanoid} from 'nanoid'
 export default function App() {
 
   const [dices, setDices] = useState(generateAllNewDice());
+  const allHeld = dices.every(die => die.isHeld)
+  const allSame = dices.every((die, i, arr) => die.value === arr[0].value)
+  
+  if(allHeld && allSame){
+    alert("You won!")
+  }
 
   function generateAllNewDice() {
     const newDice = []
@@ -17,6 +23,8 @@ export default function App() {
     return newDice
   }
 
+
+
   function hold(id){
     setDices(prevDices =>
        prevDices.map(dice => 
@@ -25,11 +33,13 @@ export default function App() {
     }
 
   function rollDice(){
-
+    if(allHeld && allSame){
+      setDices(generateAllNewDice())
+      
+    }
     setDices(prevDices => 
       prevDices.map(dice => 
         dice.isHeld ? dice : {...dice, value: Math.floor(Math.random() * 6) + 1})
-
     );
   }  
     // const newDice = dice.map(die => {
@@ -43,6 +53,8 @@ export default function App() {
 
   return(
     <main>
+      <h1 className='title'>Tenzies</h1>
+      <p className='instructions'>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
       <div className="dice-container">
         {dices.map(die => 
             <Die 
@@ -52,7 +64,7 @@ export default function App() {
               handleClick={ () => hold(die.id)} />)
         }
       </div>
-      <button className= "roll-dice" onClick={() => rollDice()}>Roll Dice</button>
+      <button className= "roll-dice" onClick={() => rollDice()}>{allHeld && allSame ? "New Game" : "Roll Dice"}</button>
     </main>
   )
 }
