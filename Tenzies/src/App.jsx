@@ -19,8 +19,8 @@ export default function App() {
     <main>
       <div className="dice-container">
         {dice.map((die, index) => <Die value={die} key={index}/>)}
-
       </div>
+      <button className= "roll-dice" onClick={() => setDice(generateAllNewDice())}>Roll Dice</button>
     </main>
   )
 }
