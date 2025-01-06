@@ -1,7 +1,10 @@
 import './App.css'
 import Die from './components/Die'
+import {useState} from 'react';
 
 export default function App() {
+
+  const [dice, setDice] = useState(generateAllNewDice());
 
   function generateAllNewDice() {
     const newDice = []
@@ -11,22 +14,12 @@ export default function App() {
     return newDice
   }
 
-  const newDice = generateAllNewDice();
-  console.log(newDice);
 
   return(
     <main>
       <div className="dice-container">
-        <Die value={1} />
-        <Die value={2} />
-        <Die value={3} />
-        <Die value={4} />
-        <Die value={5} />
-        <Die value={6} />
-        <Die value={2} />
-        <Die value={5} />
-        <Die value={5} />
-        <Die value={1} />
+        {dice.map((die, index) => <Die value={die} key={index}/>)}
+
       </div>
     </main>
   )
