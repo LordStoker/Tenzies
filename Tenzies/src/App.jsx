@@ -1,10 +1,10 @@
 import './App.css'
 import Die from './components/Die'
-import {useState} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import {nanoid} from 'nanoid'
 import Confetti from 'react-confetti';
-import { useEffect } from 'react';
-import { useRef } from 'react';
+
+
 
 export default function App() {
 
