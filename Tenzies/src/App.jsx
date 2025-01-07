@@ -6,7 +6,7 @@ import Confetti from 'react-confetti';
 
 export default function App() {
 
-  const [dices, setDices] = useState(generateAllNewDice());
+  const [dices, setDices] = useState( () => generateAllNewDice());
   const allHeld = dices.every(die => die.isHeld);
   const allSame = dices.every(die => die.value === dices[0].value);
   const gameWon = allHeld && allSame ? true : false;
@@ -29,14 +29,14 @@ export default function App() {
     }
 
   function rollDice(){
-    if(allHeld && allSame){
+    if(gameWon){
       setDices(generateAllNewDice())
     }
     else {setDices(prevDices => 
       prevDices.map(dice => 
         dice.isHeld ? dice : {...dice, value: Math.floor(Math.random() * 6) + 1})
       );
-  }
+    }
   }
      
     // const newDice = dice.map(die => {
@@ -55,6 +55,9 @@ export default function App() {
         height={window.innerHeight}
         numberOfPieces={500}
       />}
+      <div aria-live="polite" className='sr-only'>
+        {gameWon && <p>Congratulations! You won! Press "New Game" to start again</p>}
+      </div>
       <h1 className='title'>Tenzies</h1>
       <p className='instructions'>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
       <div className="dice-container">
