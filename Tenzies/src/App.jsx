@@ -3,6 +3,8 @@ import Die from './components/Die'
 import {useState} from 'react';
 import {nanoid} from 'nanoid'
 import Confetti from 'react-confetti';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 
 export default function App() {
 
@@ -10,6 +12,15 @@ export default function App() {
   const allHeld = dices.every(die => die.isHeld);
   const allSame = dices.every(die => die.value === dices[0].value);
   const gameWon = allHeld && allSame ? true : false;
+  const newGameButton = useRef(null);
+
+  useEffect(() => {
+    if(gameWon){
+      newGameButton.current.focus();
+    }
+  }
+  ,[gameWon])
+  
 
   function generateAllNewDice() {
     const newDice = []
@@ -38,7 +49,7 @@ export default function App() {
       );
     }
   }
-     
+     console.log(newGameButton.current);
     // const newDice = dice.map(die => {
     //   if(die.id === id){
     //     return {...die, isHeld: !die.isHeld}
@@ -69,7 +80,7 @@ export default function App() {
               handleClick={ () => hold(die.id)} />)
         }
       </div>
-      <button className= "roll-dice" onClick={() => rollDice()}>{gameWon ? "New Game" : "Roll Dice"}</button>
+      <button ref={newGameButton} className= "roll-dice" onClick={() => rollDice()}>{gameWon ? "New Game" : "Roll Dice"}</button>
     </main>
   )
 }
