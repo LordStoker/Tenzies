@@ -18,8 +18,7 @@ export default function App() {
     if(gameWon){
       newGameButton.current.focus();
     }
-  }
-  ,[gameWon])
+  }, [gameWon])
   
 
   function generateAllNewDice() {
